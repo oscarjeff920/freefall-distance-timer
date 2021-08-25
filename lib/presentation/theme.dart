@@ -14,4 +14,9 @@ ThemeData standardTheme = ThemeData(
       )
     )
   ),
+  iconTheme: IconThemeData(
+    color: Colors.white.withOpacity(1.0),
+    size: 30.0,
+  ),
+  accentColor: Colors.blueAccent[300],
 );
