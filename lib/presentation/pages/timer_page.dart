@@ -24,6 +24,7 @@ class _TimerPageState extends State<TimerPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        elevation: 40.0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -39,7 +40,10 @@ class _TimerPageState extends State<TimerPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                Container(  // - Timer Box
+                  padding: EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 4.0),
+                  decoration: BoxDecoration(
+                  ),
                   height: 60.0,
                   child: BlocBuilder<CalculationCubit, CalculationState>(
                     builder: (context, state) {
@@ -55,10 +59,11 @@ class _TimerPageState extends State<TimerPage> {
                 Center(
                   child: BlocBuilder<CalculationCubit, CalculationState>(
                       builder: (context, state) {
-                    return Text(
+                    return Text(  // - Calculated Distance
                         calculateDistance(state.recordedTime, 9.81).toString(),
                         style: TextStyle(
                           fontSize: 60.0,
+                          fontFamily: 'RussoOne',
                           fontWeight: FontWeight.bold
                         ));
                   }),
@@ -77,8 +82,8 @@ class _TimerPageState extends State<TimerPage> {
                     context
                         .watch<CalculationCubit>()
                         .recordTime(stopwatch.elapsedMilliseconds);
-                    return Container(
-                      height: 100.0,
+                    return Container( // - Start, Stop, Reset and Continue Buttons
+                      height: 110.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,17 +91,23 @@ class _TimerPageState extends State<TimerPage> {
                           BlocBuilder<TimerCubit, TimerState>(
                               builder: (context, state) {
                             if (state.timing == NamedTimerStates.Result) {
-                              return Container(
-                                height: 35.0,
+                              return Container( // - Continue
+                                height: 34.0,
                                 width: 84.0,
-                                color: Theme.of(context).accentColor,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                ),
                                 child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    elevation: 20.0
+                                  ),
                                   child: Text(
                                     'Continue',
                                     style: TextStyle(
+                                        fontSize: 16.0,
                                         color:
                                             Theme.of(context).iconTheme.color,
-                                        fontSize: 16.0),
+                                        ),
                                   ),
                                   onPressed: () {
                                     BlocProvider.of<TimerCubit>(context)
@@ -108,25 +119,31 @@ class _TimerPageState extends State<TimerPage> {
                               return Text('');
                             }
                           }),
-                          Container(
+                          Container(  // - Start, Stop and Reset Buttons
                             color:
                                 Theme.of(context).appBarTheme.backgroundColor,
+                            height: 60.0,
                             width: 120.0,
-                            child: TextButton(
-                              onPressed: () {
-                                BlocProvider.of<TimerCubit>(context)
-                                    .timerClick();
-                              },
-                              child: Text(
-                                timerButtonMap[state.timing]!,
-                                style: TextStyle(
-                                    fontSize: 35.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .appBarTheme
-                                        .textTheme!
-                                        .headline6!
-                                        .color),
+                            child: Center(
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  elevation: 20.0
+                                ),
+                                onPressed: () {
+                                  BlocProvider.of<TimerCubit>(context)
+                                      .timerClick();
+                                },
+                                child: Text(
+                                  timerButtonMap[state.timing]!,
+                                  style: TextStyle(
+                                      fontSize: 35.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .appBarTheme
+                                          .textTheme!
+                                          .headline6!
+                                          .color),
+                                ),
                               ),
                             ),
                           )
@@ -143,7 +160,7 @@ class _TimerPageState extends State<TimerPage> {
       floatingActionButton: BlocBuilder<TimerCubit, TimerState>(
         builder: (context, state) {
           if (state.timing == NamedTimerStates.Result) {
-            return TextButton(
+            return TextButton(  // - Results Button
                 onPressed: () {
                   Navigator.of(context).pushNamed('/results');
                 },
@@ -164,24 +181,6 @@ class _TimerPageState extends State<TimerPage> {
           } else {
             return Text('');
           }
-          //   return Column(
-          //     mainAxisAlignment: MainAxisAlignment.end,
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       IconButton(
-          //           icon: Icon(
-          //             Icons.computer_rounded,
-          //             size: 40.0,
-          //           ),
-          //           onPressed: () {
-          //             Navigator.of(context).pushNamed('/results');
-          //           }),
-          //       Text('Results', style: TextStyle(color: Theme.of(context).iconTheme.color),)
-          //     ],
-          //   );
-          // } else {
-          //   return Text('');
-          // }
         },
       ),
     );

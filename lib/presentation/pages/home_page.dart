@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                child: Text('Go', style: TextStyle(fontFamily: 'Raleway', fontSize: 50.0)),
+                child: Text('Go', style: TextStyle(fontFamily: 'Nunito', fontSize: 50.0)),
                 style: ButtonStyle(),
                 onPressed: () {
                   Navigator.of(context).pushNamed('/timer');
