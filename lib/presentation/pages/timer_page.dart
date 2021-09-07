@@ -44,29 +44,51 @@ class _TimerPageState extends State<TimerPage> {
                   padding: EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 4.0),
                   decoration: BoxDecoration(
                   ),
-                  height: 60.0,
-                  child: BlocBuilder<CalculationCubit, CalculationState>(
-                    builder: (context, state) {
-                      return Text(
-                        stopwatch.formatStopwatchTime(
-                            state.recordedTime, false),
-                        style: TextStyle(fontSize: 50.0,
-                        color: Theme.of(context).accentColor),
-                      );
-                    },
+                  height: 90.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('FALL DURATION',
+                          style: TextStyle(
+                              fontFamily: 'Play',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff4498e2))),
+                      BlocBuilder<CalculationCubit, CalculationState>(
+                        builder: (context, state) {
+                          return Text(
+                            stopwatch.formatStopwatchTime(
+                                state.recordedTime, false),
+                            style: TextStyle(fontSize: 50.0,
+                            color: Theme.of(context).accentColor),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 Center(
-                  child: BlocBuilder<CalculationCubit, CalculationState>(
-                      builder: (context, state) {
-                    return Text(  // - Calculated Distance
-                        calculateDistance(state.recordedTime, 9.81).toString(),
-                        style: TextStyle(
-                          fontSize: 60.0,
-                          fontFamily: 'RussoOne',
-                          fontWeight: FontWeight.bold
-                        ));
-                  }),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('DISTANCE FALLEN',
+                          style: TextStyle(
+                              fontFamily: 'Play',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff050000))),
+                      BlocBuilder<CalculationCubit, CalculationState>(
+                          builder: (context, state) {
+                        return Text(  // - Calculated Distance
+                            calculateDistance(state.recordedTime, 9.81).toString(),
+                            style: TextStyle(
+                              fontSize: 60.0,
+                              fontFamily: 'RussoOne',
+                              fontWeight: FontWeight.bold
+                            ));
+                      }),
+                    ],
+                  ),
                 ),
                 BlocConsumer<TimerCubit, TimerState>(
                   listener: (context, state) {
